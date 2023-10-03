@@ -1,0 +1,232 @@
+topic: ~Dialogo_Simone_diceV1()
+language: iti
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~hello) ~hello
+
+concept:(pres)[
+    "nao presentati"
+    "nao saluta"
+]
+
+concept:(saluti)[
+    "ciao {Nao}"
+    "buongiorno {Nao}"
+    "salve"
+]
+
+concept:(elenco_dom):
+    "{che} cosa [posso possiamo] [domandarti chiederti]"
+    "dicci le domande da farti"
+    "dimmi quali domande posso farti"
+
+
+concept:(colore)
+[    
+    "giallo"
+    "rosso"
+    "viola"
+    "nero"
+    "bianco"
+    "blu"
+    "verde"
+    "lilla"
+    "azzurro"
+    "arancione"
+    "arancio"
+    "celeste"
+    "rosa"
+    "fucsia"
+    "marrone"
+    "beige"
+]
+
+
+concept:(domanda_come_stai)
+[
+    "ciao come stai"
+    "tutto bene?" 
+    "come andiamo?"
+    "come stai?"
+    "com'è?" 
+    "come va?"
+    "come sta andando?" 
+    "come ti senti?"  
+]
+
+
+concept:(risposta_come_stai_bene)
+[
+    "bene {grazie}" 
+    "benissimo {grazie}" 
+    "tutto bene grazie"
+    "bene è stata una bella giornata"
+    "va alla grande" 
+    "sto benissimo perchè sono felicissimo"
+    "sto benissimo"
+]
+
+
+concept:(risposta_come_stai_male)
+[    
+    "sto malissimo"
+    "sto male ma ho tutto sotto controllo" 
+    "sono triste"
+    "sono malinconico"
+    "si tira avanti" 
+    "male"
+    "sono stanco"
+    "ho visto giorni migliori" 
+]
+
+concept:(compleanno)
+[
+    "quando compi gli anni"
+    "quand'è il tuo compleanno"
+    "che giorno compi gli anni"
+]
+
+
+concept:(risp_compleanno)
+[
+    "auguri"
+    "tanti auguri"
+    "buon compleanno"
+    "tantissimi auguri"
+]
+
+
+concept:(domanda_animale)
+[
+    "qual'è il tuo animale preferito"
+    "che animale ti piace"
+]
+
+
+concept:(domanda_colore)
+[
+    "qual'è il tuo colore preferito"
+    "che colore ti piace"
+
+]
+
+concept:(no)[
+    "no {grazie}" 
+    "no {"va bene così"}"
+    "no non sono interessato"
+    "assolutamente no"
+    "certamente no"
+]
+
+concept:(si)[
+    "si {grazie}"
+    "{si} ho altre domande"
+    "{si} avrei una domanda"
+    "{si} sono interessato"
+    "{si} sono curioso"
+    "{si} raccontami di più"
+    "[voglio vorrei] saperne di più"
+    "certo"
+    "certamente"
+    "assolutamente"
+    "sicuro"
+    "va bene"
+    "ok"
+    "d'accordo"
+    "naturalmente"
+]
+
+concept:(chi_sei)[
+    "chi sei"
+    "cosa sei"
+    "{ciao} come ti chiami"
+]
+
+concept:(complimenti)[
+    "{sei} forte"
+    "{sei} bravissimo"
+    "{sei} {che} bravo"
+    "{sei} {un} grande"
+    "{che} figata"
+    "sei un grande"
+    "{sei} fortissimo"
+    "che bello"
+    "{sei} bellissimo"
+    "{che} carino"
+    "wow"
+]
+
+concept:(passioni)[
+    "{quali} {che} passioni hai?"
+    "quali sono le tue passioni?"
+]
+
+concept:(saluti_arrivederci)[
+    "{grazie} arrivederci"
+]
+
+
+##############################################dialogo#################
+
+u: (Nao {"ci sei?"}) "si dimmi tutto"
+u: (Nao sei pronto?) "certo, sono nato pronto"
+
+u:({Nao} mi vedi) "certo che ti vedo"
+u:({Nao} mi senti) "certo che ti sento"
+
+u:({Nao} sei operativo?) "si ho tutto sotto controllo"
+
+u:(~pres) ciao a tutti! Benvenuti al Laboratorio di Informatica, io mi chiamo Nao e sono un robot umanoide
+
+u:(~chi_sei) io mi chiamo Nao, sono un robot umanoide, mi piace stare con le persone sopratutto amo i bambini
+
+u:(Nao sei pronto a spiegare il gioco?) "certo, sono prontissimo, non vedo l'ora di iniziare"
+
+u: (~domanda_come_stai) ^rand["sto bene" "molto bene" benissimo "sono felice"] . E tu come stai?
+    u1: (~risposta_come_stai_bene) ^rand["grande! sono felice per te" "che bello" bene]
+    u1: (* ~risposta_come_stai_bene) ^rand["grande! sono felice per te" "che bello" bene]
+    u1: (~risposta_come_stai_bene*) ^rand["grande! sono felice per te" "che bello" bene]
+    u1: (~risposta_come_stai_male) ^rand["mi dispiace" "vedrai che andrà meglio" passerà "mi spiace"] 
+    u1: (* ~risposta_come_stai_male) ^rand["mi dispiace" "vedrai che andrà meglio" passerà "mi spiace"] 
+    u1: (~risposta_come_stai_male *) ^rand["mi dispiace" "vedrai che andrà meglio" passerà "mi spiace"] 
+
+
+u: (~domanda_colore) "il mio colore preferito è il giallo. Il tuo qual è?"
+    u1:(~colore *) "è il mio secondo colore preferito"
+    u1:(* ~colore) "è il mio secondo colore preferito"
+    u1:(~colore) "è il mio secondo colore preferito"
+   
+    
+u: (~domanda_animale) "mi piace l'elefante. E il tuo qual è?"
+    u1:(mi piace *) "anche quello mi piace "
+    u1:(il mio animale preferito è *) "bello questo non ci avevo pensato"
+
+u: (~compleanno) ^rand["il mio compleanno è oggi" "oggi compio gli anni"]
+u: (~risp_compleanno) "grazie mille"
+
+#u: (~capire) ^rand[ok traquillo "vai sereno"] non preoccuparti prova a #richiedermi
+
+u: (dove lavori?) ["io lavoro nel dipartimento di Informatica a Ferrara, mi trovate in ufficio Aclai, tutti i giorni dalle 8:30 alle 13, e dalle 14:30 alle 18:00, spero mi veniate a trovare"]  
+  
+#u: (~saluti_arrivederci) ["grazie di essere venuti" "arrivederci" "a presto"] "buona giornata"
+  
+
+#todo elenco di domande che i bambini possono chiedere a Nao
+u: (~elenco_dom) ["quando è il mio compleanno, come sto, qual è il mio animale preferito, qual è il tuo colore preferito e quali sono le mie passioni e qual è la mia squadra del cuore"]
+
+
+u:(~complimenti) "grazie tu sei simpatico"
+
+
+u:(nao parti) ^start(simo_dice_v1-a2d61e/azione_simoDice) ^wait(simo_dice_v1-a2d61e/azione_simoDice)
+
+
+
+
+
