@@ -20,248 +20,170 @@
               <script language="4">
                 <content>
                   <![CDATA[class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self)
-
-    #def handler(self, value):
-        #if value == "ok nao spiega il gioco":
-            #self.tts.setParameter("speed", 80)
-            #self.tts.say("il testo del gioco....") #TODOOOOOOOOOOOO DIALOGO INTERATTIVO
-
-        #if value == "ok nao iniziamo il gioco":
-            #self.main()
-
-        #if value == "ok nao fermati":
-            #try:
-                #while True:
-                    #self.logger.info("sono in pausa")
-            #except:
-                #self.logger.fatal("errore")
-
-
-        #if value == "ok nao continua il gioco":
-            #raise Exception()
-
-        #if value == "ok nao il gioco è finito":
-           # self.onInput_onStop()
+    def _init_(self):
+        GeneratedClass._init_(self)
 
     def onLoad(self):
-        #put initialization code here
-        #pass
         from naoqi import ALProxy
-        import almath
         from naoqi import *
+        import almath
 
-        #iniziale
-        self.head = "f"
-        self.armL =  "down"
-        self.armR =  "down"
-        self.handL = "open"
-        self.handR = "open"
+        self.reset()
 
-        #azioni testa
-        self.head_action ={
-            "dx":"guarda a destra",
-            "sx":"guarda a sinistra",
-            "up":"guarda in alto",
-            "down":"guarda in basso",
-            "f"= "guarda di fronte"
+        self.actions = {
+            "head": {
+                "dx":   "guardate a destra",
+                "sx":   "guardate a sinistra",
+                "up":   "guardate in alto",
+                "down": "guardate in basso",
+                "f":    "guardate di fronte"
+            },
+            "armL": {
+                "up": "alzate il braccio sinistro",
+                "down": "abbassate il braccio sinistro"
+            },
+            "armR": {
+                "up":   "alzate il braccio destro",
+                "down": "abbassate il braccio destro"
+            },
+            "handL": {
+                "open":  "aprite la mano sinistra",
+                "close": "chiudete la mano sinistra"
+            },
+            "handR": {
+                "open":  "aprite la mano destra",
+                "close": "chiudete la mano destra"
+            }
         }
 
-        #azioni braccio sx
-        self.armL_action = {
-            "up": "alza il braccio sinistro",
-            "down": "abbassa il braccio sinistro"
+        self.compatible_actions = {
+            "head": {
+                "dx":   ["sx", "f", "up", "down"],
+                "sx":   ["dx", "f", "up", "down"],
+                "up":   ["sx", "dx", "f", "down"],
+                "down": ["sx", "dx", "f", "up"],
+                "f":    ["sx", "dx", "up", "down"],
+            },
+            "armL": {
+                "up":   ["down"],
+                "down": ["up"]
+            },
+            "armR": {
+                "up":   ["down"],
+                "down": ["up"]
+            },
+            "handL": {
+                "open":  ["close"],
+                "close": ["open"]
+            },
+            "handR": {
+                "open":  ["close"],
+                "close": ["open"]
+            }
         }
 
-        #azioni braccio dx
-        self.armR_action = {
-            "up": "alza il braccio destro",
-            "down": "abbassa il braccio destro"
+        self.available_moves = {
+            "alzate il braccio destro": [["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
+            "alzate il braccio sinistro": [["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
+            "abbassate il braccio destro": [["RShoulderPitch"], [0], [0.1]], # TODO: find correct angles to put arm to rest
+            "abbassate il braccio sinistro": [["LShoulderPitch"], [0], [0.1]], # TODO: find correct angles to put arm to rest
+            "aprite la mano destra": [["RHand"], [1.0], [0.05]],
+            "aprite la mano sinistra": [["LHand"], [1.0], [0.05]],
+            "chiudete la mano sinistra": [["LHand"], [1.0], [0.05]],
+            "chiudete la mano destra": [["RHand"], [1.0], [0.05]],
+            "guardate a destra": [["HeadYaw"], [-60*almath.TO_RAD], [0.05]],
+            "guardate a sinistra": [["HeadYaw"], [60*almath.TO_RAD], [0.05]],
+            "guardate in basso": [["HeadPitch"], [15*almath.TO_RAD], [0.05]],
+            "guardate in alto": [["HeadPitch"], [-15*almath.TO_RAD], [0.05]],
+            "guardate di fronte": [["HeadPitch"], [-15*almath.TO_RAD], [0.05]] # TODO: test this
         }
 
-        #azioni mano dx
-        self.handL_action = {
-            "open": "apri la mano sinistra",
-            "close": "chiudi la mano sinistra"
-        }
-
-
-        #azioni mano dx
-        self.handR_action = {
-            "open": "apri la mano destra",
-            "close": "chiudi la mano destra"
-        }
-
-
-
-
-        ####################################################MOVIMENTI CHE PUO FARE IN QUESTE POSIZIONI###################à
-
-         #azioni possibili testa
-         self.head_compatible ={
-            "dx":["sx","f","up","down"],
-            "sx":["dx", "f","up","down"],
-            "up":["sx", "dx", "f","down"],
-            "down":["sx", "dx", "f","up"],
-            "f": ["sx", "dx", "up","down"],
-        }
-
-        #azioni possibili braccio sx
-        self.armL_compatible = {
-            "up": ["down"]
-            "down": ["up"]
-        }
-
-        #azioni possibili braccio dx
-        self.armR_compatible = {
-            "up": ["down"],
-            "down": ["up"]
-        }
-
-        #azione possibili mano sx
-        self.handL_compatible = {
-            "open": ["close"],
-            "close": ["open"]
-        }
-
-        #azione possibili mano sx
-        self.handR_compatible = {
-            "open": ["close"],
-            "close": ["open"]
-        }
-
-        self.head_compatible[self.head]
-
-
-        self.move_giusti = {
-            "Simone dice alzate e abbassate il braccio destro":[["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "Simone dice alzate e abbassate il braccio sinistro":[["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "Simone dice aprite la mano destra":[["RHand"], [1.0], [0.05]],
-            "Simone dice aprite la mano sinistra":[["LHand"], [1.0], [0.05]],
-            "Simone dice chiudete la mano sinistra": [["LHand"],[1.0], [0.05]],
-            "Simone dice chiudete la mano destra":[["RHand"], [1.0], [0.05]],
-            "Simone dice gira la testa a destra e resta in questa posizione":[["HeadYaw"],[-60*almath.TO_RAD],[0.05]],
-            "Simone dice gira la testa a sinistra e resta in questa posizione":[["HeadYaw"],[60*almath.TO_RAD], [0.05]],
-            "Simone dice guarda in basso e resta in questa posizione":[["HeadPitch"],[15*almath.TO_RAD], [0.05]],
-            "Simone dice guarda in alto e resta in questa posizione":[["HeadPitch"],[-15*almath.TO_RAD], [0.05]]
-        }
-
-        self.move_sbagliati = {
-            "alzate il braccio destro":[["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "alzate il braccio sinistro":[["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "aprite la mano destra":[["RHand"], [1.0], [0.05]],
-            "aprite la mano sinistra":[["LHand"],[1.0] , [0.05]],
-            "chiudete la mano sinistra": [["LHand"],[1.0], [0.05]],
-            "chiudete la mano destra":[["RHand"], [1.0], [0.05]],
-            "gira la testa a destra e resta in questa posizione":[["HeadYaw"],[-60*almath.TO_RAD], [0.05]],
-            "gira la testa a sinistra e resta in questa posizione":[["HeadYaw"],[60*almath.TO_RAD], [0.05]],
-            "guarda in basso e resta in questa posizione":[["HeadPitch"],[15*almath.TO_RAD], [0.05]],
-            "guarda in alto e resta in questa posizione":[["HeadPitch"],[-15*almath.TO_RAD], [0.05]]
-        }
-
-
-
-
-
-        #API classi
+        # API classi TODO: uncomment these lines
         self.session = qi.Session()
         self.session.connect("tcp://" + "127.0.0.1" + ":" + str(9559))
-        #self.tts = self.session.service("ALTextToSpeech")
-        #perchè parli
         self.tts = ALProxy("ALTextToSpeech")
         self.motion = ALProxy("ALMotion")
         self.posture = ALProxy("ALRobotPosture")
-        #self.memory_service = ALProxy("ALMemory")
-
-        ##
-        #self.asr_service= ALProxy("ALSpeechRecognition")
-        #mem = self.session.service("ALMemory")
-        #sub = mem.subscriber("event/WordRecognizedAndGrammar")#riconoscere l'evento
-        #sub.signal.connect(self.handler)#connettiamo l'evento alla funzione
-        ##
-
-
-        #riconosce le parole
-        #self.subscriber= self.memory_service.subscriber("WordRecognizedAndGrammar")
-        #self.subscriber.signal.connect(self.handler)
 
 
     def onUnload(self):
-        #put clean-up code here
         pass
 
     def onInput_onStart(self):
         import time
-        from naoqi import *
-        #Alspeechreconition
-        ##
-        #self.asr_service.setLanguage("Italian")
-        #vocabulary = ["ok nao spiega il gioco", "ok nao iniziamo il gioco", "ok nao fermati", "ok nao continua il gioco", "ok nao il gioco è finito"]
-        #self.asr_service.setVocabulary(vocabulary, True)
-        #self.asr_service.subscribe("test_recognition")
-
-        #time.sleep(1000)
-        #self.asr_service.unsubscribe("test_recognition") #smette di ascoltare
-        ##
+        # TODO: uncomment this # from naoqi import *
         self.main()
         self.onInput_onStop()
 
     def main(self):
-        #self.onStopped() #activate the output of the box
-        #passs
-        #libreria di matematica per convertire i gradi in radianti
         import time
-        import almath
+        import almath # libreria di matematica per convertire i gradi in radianti
         import random
         from random import choice
         from random import random
 
+        actions = {}
+        # per ogni parte del corpo di Nao che può essere mossa...
+        for bodyPart = self.status.keys():
+            # ... ne prendo il suo stato corrente...
+            currentBodyPartStatus = self.status[bodyPart]
+            # ... lo utilizzo per capire quali stati può raggiungere...
+            currentBodyPartCompatibleActions = self.compatible_actions[bodyPart][currentBodyPartStatus]
+            for avStatus = currentBodyPartCompatibleActions:
+                # ... aggiungo questi al dizionario actions
+                longActionName = self.actions[bodyPart][avStatus]
+                actions[longActionName] = self.available_moves[longActionName]
+        # adesso, `actions`, contiene solo stati raggiungibili senza problemi dal robot
+        # ma è strutturato esattamente come `self.available_moves`
 
-        #funzione per generare un vettore di giusto sbagliato random
-        scelte = None #inizializzo il vettore all'inizio è vuoto
-
-        #scelte.append(random.choice(['giusto', 'sbagliato']))
-        if random() <= 0.8:
-            scelte = 'giusto'
-        else:
-            scelte = 'sbagliato'
-
-
-        self.logger.fatal(scelte);
-
-
-        #inizializzazione variabili
+        # inizializzazione variabili
         comando = None
         parametri = None
-        if scelte == "giusto":
-            comando, parametri = choice(list(self.move_giusti.items()))
-        else:
-            comando, parametri = choice(list(self.move_sbagliati.items()))
-        self.logger.fatal(comando)
-        self.logger.fatal(parametri);
+        comando, parametri = choice(list(actions))
+
+        # self.logger.fatal(comando)
+        # self.logger.fatal(parametri)
 
         names = parametri[0]
         angles = parametri[1]
         fractionMaxSpeed = parametri[2]
 
-        self.tts.say(comando)
+        if random() <= 0.8:
+            self.tts.say("simone dice " + comando)
+        else:
+            self.tts.say(comando)
         time.sleep(3.0)
-        self.motion.setAngles(names,angles,fractionMaxSpeed)
+        self.motion.setAngles(names, angles, fractionMaxSpeed)
         time.sleep(15.0)
+
+        # TODO: test this code without this line to fix the problem
+        # of robot not staying in the selected position
+        self.posture.goToPosture("Stand", 1.0)
+
+        #----------------------------------------------------------------
+
+        self.onInput_onStop()
+
+
+    def reset(self):
+        self.status = {
+            "head": "f",
+            "armL": "down",
+            "armR": "down",
+            "handL": "open",
+            "handR": "open"
+        }
 
         self.posture.goToPosture("Stand", 1.0)
 
+        #----------------------------------------------------------------
 
-
-        #--------------------------------------------------------------------------------------
-
-        self.onInput_onStop();
+        self.onInput_onStop()
 
 
     def onInput_onStop(self):
-        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
-        self.onStopped() #activate the output of the box]]>
+        self.onUnload()
+        self.onStopped()]]>
                 </content>
               </script>
               <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
