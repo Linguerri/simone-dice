@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package version="0.0.0" installOnlyAtStartup="false" uuid="simo_dice_v1-a2d61e">
+<package uuid="simo_dice_v1-a2d61e" installOnlyAtStartup="false" version="0.0.0">
  <names>
   <name lang="en_US">Simone_dice_V1</name>
   <name lang="it_IT">Simonedice_V1</name>
@@ -25,9 +25,9 @@
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>
-  <dialogContent typeVersion="1.0" topicName="Dialogo_Simone_diceV1">
-   <topic language="en_US" path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_enu.top"/>
-   <topic language="it_IT" path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_iti.top"/>
+  <dialogContent topicName="Dialogo_Simone_diceV1" typeVersion="1.0">
+   <topic path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_enu.top" language="en_US"/>
+   <topic path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_iti.top" language="it_IT"/>
   </dialogContent>
  </contents>
 </package>

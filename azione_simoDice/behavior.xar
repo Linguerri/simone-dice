@@ -52,6 +52,88 @@
         import almath
         from naoqi import *
 
+        #iniziale
+        self.head = "f"
+        self.armL =  "down"
+        self.armR =  "down"
+        self.handL = "open"
+        self.handR = "open"
+
+        #azioni testa
+        self.head_action ={
+            "dx":"guarda a destra",
+            "sx":"guarda a sinistra",
+            "up":"guarda in alto",
+            "down":"guarda in basso",
+            "f"= "guarda di fronte"
+        }
+
+        #azioni braccio sx
+        self.armL_action = {
+            "up": "alza il braccio sinistro",
+            "down": "abbassa il braccio sinistro"
+        }
+
+        #azioni braccio dx
+        self.armR_action = {
+            "up": "alza il braccio destro",
+            "down": "abbassa il braccio destro"
+        }
+
+        #azioni mano dx
+        self.handL_action = {
+            "open": "apri la mano sinistra",
+            "close": "chiudi la mano sinistra"
+        }
+
+
+        #azioni mano dx
+        self.handR_action = {
+            "open": "apri la mano destra",
+            "close": "chiudi la mano destra"
+        }
+
+
+
+
+        ####################################################MOVIMENTI CHE PUO FARE IN QUESTE POSIZIONI###################à
+
+         #azioni possibili testa
+         self.head_compatible ={
+            "dx":["sx","f","up","down"],
+            "sx":["dx", "f","up","down"],
+            "up":["sx", "dx", "f","down"],
+            "down":["sx", "dx", "f","up"],
+            "f": ["sx", "dx", "up","down"],
+        }
+
+        #azioni possibili braccio sx
+        self.armL_compatible = {
+            "up": ["down"]
+            "down": ["up"]
+        }
+
+        #azioni possibili braccio dx
+        self.armR_compatible = {
+            "up": ["down"],
+            "down": ["up"]
+        }
+
+        #azione possibili mano sx
+        self.handL_compatible = {
+            "open": ["close"],
+            "close": ["open"]
+        }
+
+        #azione possibili mano sx
+        self.handR_compatible = {
+            "open": ["close"],
+            "close": ["open"]
+        }
+
+        self.head_compatible[self.head]
+
+
         self.move_giusti = {
             "Simone dice alzate e abbassate il braccio destro":[["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
             "Simone dice alzate e abbassate il braccio sinistro":[["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
@@ -78,9 +160,13 @@
             "guarda in alto e resta in questa posizione":[["HeadPitch"],[-15*almath.TO_RAD], [0.05]]
         }
 
+
+
+
+
         #API classi
         self.session = qi.Session()
-        self.session.connect("tcp://" + "10.80.2.30" + ":" + str(9559))
+        self.session.connect("tcp://" + "127.0.0.1" + ":" + str(9559))
         #self.tts = self.session.service("ALTextToSpeech")
         #perchè parli
         self.tts = ALProxy("ALTextToSpeech")
@@ -129,7 +215,6 @@
         import almath
         import random
         from random import choice
-
         from random import random
 
 
