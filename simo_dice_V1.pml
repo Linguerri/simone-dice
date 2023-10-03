@@ -7,11 +7,14 @@
     </BehaviorDescriptions>
     <Dialogs>
         <Dialog name="Dialogo_Simone_diceV1" src="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1.dlg" />
+        <Dialog name="loop_control" src="loop_control/loop_control.dlg" />
     </Dialogs>
     <Resources />
     <Topics>
         <Topic name="Dialogo_Simone_diceV1_iti" src="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_iti.top" topicName="Dialogo_Simone_diceV1" language="it_IT" nuance="iti" />
         <Topic name="Dialogo_Simone_diceV1_enu" src="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_enu.top" topicName="Dialogo_Simone_diceV1" language="en_US" nuance="enu" />
+        <Topic name="loop_control_enu" src="loop_control/loop_control_enu.top" topicName="loop_control" language="en_US" nuance="enu" />
+        <Topic name="loop_control_iti" src="loop_control/loop_control_iti.top" topicName="loop_control" language="it_IT" nuance="iti" />
     </Topics>
     <IgnoredPaths />
     <Translations auto-fill="it_IT">

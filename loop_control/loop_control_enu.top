@@ -1,0 +1,6 @@
+topic: ~loop_control()
+language: enu
+
+u:(continua) "tutti pronti" $continua=1
+u:(fermati) "peccato, mi stavo divertendo" $fine=1
+
