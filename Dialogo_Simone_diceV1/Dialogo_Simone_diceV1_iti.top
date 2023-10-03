@@ -188,7 +188,18 @@ u:(~chi_sei) io mi chiamo Nao, sono un robot umanoide, mi piace stare con le per
 
 u:(Nao sei pronto a spiegare il gioco?) "certo, sono prontissimo, non vedo l'ora di iniziare"
 
-u: (~domanda_come_stai) ^rand["sto bene" "molto bene" benissimo "sono felice"] . E tu come stai?
+
+u:(Nao spiega il gioco) "Benvenuti al laboratorio di Informatica, oggi faremo il gioco Simone dice. 
+Ora vi spiegherò le regole: 
+Io vi dirò dei movimenti e voi dovete farli e dovete restare in quella posizione finchè non vi dirò di cambiarla.
+Contemporanemante chiamerò altri movimenti . 
+La difficoltà è che voi dovete fare i movimenti solo quando dico simone dice se non lo dico dovete restare fermi.
+Se vi muovete verrete eliminati.
+Facciamo un esempio, Giulia Aiutami. Simone dice alza il braccio destro, abbassa il braccio destro. 
+Ecco come vedete Giulia ha tenuto su il braccio perchè non ho detto simone dice abbassate il braccio destro.
+Inoltre farò anche io questi movimenti, però dovete stare attenti perchè alcuni li farò corretti altri sbagliati perciò dovete fare attenzione."
+
+u:(~domanda_come_stai) ^rand["sto bene" "molto bene" benissimo "sono felice"] . E tu come stai?
     u1: (~risposta_come_stai_bene) ^rand["grande! sono felice per te" "che bello" bene]
     u1: (* ~risposta_come_stai_bene) ^rand["grande! sono felice per te" "che bello" bene]
     u1: (~risposta_come_stai_bene*) ^rand["grande! sono felice per te" "che bello" bene]
