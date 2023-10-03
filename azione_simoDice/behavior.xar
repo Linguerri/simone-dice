@@ -14,7 +14,7 @@
     <Timeline enable="0">
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
-          <Diagram>
+          <Diagram scale="59.4604">
             <Box name="gioco_simo_dice_V1" id="1" localization="8" tooltip="" x="350" y="319">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
@@ -32,8 +32,8 @@
             "head": "f",
             "armL": "down",
             "armR": "down",
-            "handL": "open",
-            "handR": "open"
+            "handL": "close",
+            "handR": "close"
         }
 
         self.actions = {
@@ -91,17 +91,17 @@
         self.available_moves = {
             "alzate il braccio destro": [["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
             "alzate il braccio sinistro": [["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "abbassate il braccio destro": [["RShoulderPitch"], [0], [0.1]], # TODO: find correct angles to put arm to rest
-            "abbassate il braccio sinistro": [["LShoulderPitch"], [0], [0.1]], # TODO: find correct angles to put arm to rest
+            "abbassate il braccio destro": [["RShoulderPitch"], [90*almath.TO_RAD], [0.1]], # TODO: test this
+            "abbassate il braccio sinistro": [["LShoulderPitch"], [90*almath.TO_RAD], [0.1]], # TODO: test this
             "aprite la mano destra": [["RHand"], [1.0], [0.05]],
             "aprite la mano sinistra": [["LHand"], [1.0], [0.05]],
-            "chiudete la mano sinistra": [["LHand"], [1.0], [0.05]],
-            "chiudete la mano destra": [["RHand"], [1.0], [0.05]],
-            "guardate a destra": [["HeadYaw"], [-60*almath.TO_RAD], [0.05]],
-            "guardate a sinistra": [["HeadYaw"], [60*almath.TO_RAD], [0.05]],
-            "guardate in basso": [["HeadPitch"], [15*almath.TO_RAD], [0.05]],
-            "guardate in alto": [["HeadPitch"], [-15*almath.TO_RAD], [0.05]],
-            "guardate di fronte": [["HeadPitch"], [-15*almath.TO_RAD], [0.05]] # TODO: test this
+            "chiudete la mano sinistra": [["LHand"], [0], [0.05]],
+            "chiudete la mano destra": [["RHand"], [0], [0.05]],
+            "guardate a destra": [["HeadYaw", "HeadPitch"], [-60*almath.TO_RAD, 0], [0.05, 0.05]],
+            "guardate a sinistra": [["HeadYaw", "HeadPitch"], [60*almath.TO_RAD, 0], [0.05, 0.05]],
+            "guardate in basso": [["HeadPitch", "HeadYaw"], [15*almath.TO_RAD, 0], [0.05, 0.05]],
+            "guardate in alto": [["HeadPitch", "HeadYaw"], [-15*almath.TO_RAD, 0],  [0.05, 0.05]],
+            "guardate di fronte": [["HeadPitch", "HeadYaw"], [-15*almath.TO_RAD, 0], [0.05, 0.05]] # TODO: test this
         }
 
         # API classi TODO: uncomment these lines
@@ -130,6 +130,7 @@
         from random import random
 
         actions = {}
+        # FIXME: not properly setting the new status of the robot
         # per ogni parte del corpo di Nao che può essere mossa...
         for bodyPart in self.status.keys():
             # ... ne prendo il suo stato corrente...
