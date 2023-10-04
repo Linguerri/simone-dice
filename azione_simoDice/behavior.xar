@@ -91,8 +91,8 @@
         self.available_moves = {
             "alzate il braccio destro": [["RShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
             "alzate il braccio sinistro": [["LShoulderPitch"], [-40*almath.TO_RAD], [0.1]],
-            "abbassate il braccio destro": [["RShoulderPitch"], [90*almath.TO_RAD], [0.1]], # TODO: test this
-            "abbassate il braccio sinistro": [["LShoulderPitch"], [90*almath.TO_RAD], [0.1]], # TODO: test this
+            "abbassate il braccio destro": [["RShoulderPitch"], [90*almath.TO_RAD], [0.1]],
+            "abbassate il braccio sinistro": [["LShoulderPitch"], [90*almath.TO_RAD], [0.1]],
             "aprite la mano destra": [["RHand"], [1.0], [0.05]],
             "aprite la mano sinistra": [["LHand"], [1.0], [0.05]],
             "chiudete la mano sinistra": [["LHand"], [0], [0.05]],
@@ -101,15 +101,31 @@
             "guardate a sinistra": [["HeadYaw", "HeadPitch"], [60*almath.TO_RAD, 0], [0.05, 0.05]],
             "guardate in basso": [["HeadPitch", "HeadYaw"], [15*almath.TO_RAD, 0], [0.05, 0.05]],
             "guardate in alto": [["HeadPitch", "HeadYaw"], [-15*almath.TO_RAD, 0],  [0.05, 0.05]],
-            "guardate di fronte": [["HeadPitch", "HeadYaw"], [-15*almath.TO_RAD, 0], [0.05, 0.05]] # TODO: test this
+            "guardate di fronte": [["HeadPitch", "HeadYaw"], [0, 0], [0.05, 0.05]] # TODO: test this
         }
 
-        # API classi TODO: uncomment these lines
+        self.long2synth = {
+            "alzate il braccio destro": ("armR", "up"),
+            "alzate il braccio sinistro": ("armL", "up"),
+            "abbassate il braccio destro": ("armR", "down"),
+            "abbassate il braccio sinistro": ("armL", "down"),
+            "aprite la mano destra": ("handR", "open"),
+            "aprite la mano sinistra": ("handL", "open"),
+            "chiudete la mano sinistra": ("handL", "close"),
+            "chiudete la mano destra": ("handR", "close"),
+            "guardate a destra": ("head", "dx"),
+            "guardate a sinistra": ("head", "sx"),
+            "guardate in basso": ("head", "down"),
+            "guardate in alto": ("head", "up"),
+            "guardate di fronte": ("head", "f"),
+        }
+
         self.session = qi.Session()
         self.session.connect("tcp://" + "127.0.0.1" + ":" + str(9559))
         self.tts = ALProxy("ALTextToSpeech")
         self.motion = ALProxy("ALMotion")
         self.posture = ALProxy("ALRobotPosture")
+        self.al = ALProxy("ALAutonomousLife")
 
         self.posture.goToPosture("Stand", 1.0)
 
@@ -129,6 +145,9 @@
         from random import choice
         from random import random
 
+        self.logger.fatal(self.al.getState())
+
+        oldStatus = self.status.copy() #posizione corrente
         actions = {}
         # FIXME: not properly setting the new status of the robot
         # per ogni parte del corpo di Nao che può essere mossa...
@@ -149,6 +168,9 @@
         parametri = None
         comando, parametri = choice(list(actions.items()))
 
+        selBodyPart, selPosition = self.long2synth[comando]
+        self.status[selBodyPart] = selPosition
+
         # self.logger.fatal(comando)
         # self.logger.fatal(parametri)
 
@@ -156,21 +178,40 @@
         angles = parametri[1]
         fractionMaxSpeed = parametri[2]
 
-        if random() <= 0.8:
+        isSimoneDice = random() <= 0.8
+        self.logger.fatal("isSimoneDice: " + str(isSimoneDice))
+
+        if isSimoneDice:
             self.tts.say("simone dice " + comando)
         else:
             self.tts.say(comando)
+
+
         time.sleep(3.0)
         self.motion.setAngles(names, angles, fractionMaxSpeed)
         time.sleep(15.0)
 
-        # TODO: test this code without this line to fix the problem
-        # of robot not staying in the selected position (robot non rimane nella posizione selezionata
-        #self.posture.goToPosture("Stand", 1.0)
+        if not isSimoneDice:
+            time.sleep(5.0)
+            self.applyStatus(oldStatus)
+            time.sleep(10.0)
 
         #----------------------------------------------------------------
 
         self.onInput_onStop()
+
+    def applyStatus(self, status = None):
+        if status == None:
+            status = self.status
+
+        acts = []
+        for bodyPart in status.keys():
+            currentBodyPartStatus = status[bodyPart]
+            longActionName = self.actions[bodyPart][currentBodyPartStatus]
+            acts.append(self.available_moves[longActionName])
+
+        totalActions = [[a[i][0] for a in acts] for i in range(0, 3)]
+        self.motion.setAngles(*totalActions)
 
 
     def reset(self):
