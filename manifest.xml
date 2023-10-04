@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package version="0.0.0" uuid="simo_dice_v1-a2d61e" installOnlyAtStartup="false">
+<package uuid="simo_dice_v1-a2d61e" installOnlyAtStartup="false" version="0.0.0">
  <names>
   <name lang="en_US">Simone_dice_V1</name>
   <name lang="it_IT">Simonedice_V1</name>
@@ -26,12 +26,12 @@
    <permissions/>
   </behaviorContent>
   <dialogContent topicName="Dialogo_Simone_diceV1" typeVersion="1.0">
-   <topic path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_enu.top" language="en_US"/>
-   <topic path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_iti.top" language="it_IT"/>
+   <topic language="en_US" path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_enu.top"/>
+   <topic language="it_IT" path="Dialogo_Simone_diceV1/Dialogo_Simone_diceV1_iti.top"/>
   </dialogContent>
   <dialogContent topicName="loop_control" typeVersion="1.0">
-   <topic path="loop_control/loop_control_enu.top" language="en_US"/>
-   <topic path="loop_control/loop_control_iti.top" language="it_IT"/>
+   <topic language="en_US" path="loop_control/loop_control_enu.top"/>
+   <topic language="it_IT" path="loop_control/loop_control_iti.top"/>
   </dialogContent>
  </contents>
 </package>

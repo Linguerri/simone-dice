@@ -14,7 +14,7 @@
     <Timeline enable="0">
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
-          <Diagram scale="59.4604">
+          <Diagram scale="84.0896">
             <Box name="gioco_simo_dice_V1" id="1" localization="8" tooltip="" x="350" y="319">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
@@ -145,6 +145,8 @@
         from random import choice
         from random import random
 
+        #self.al.setStatus(solitary)
+
         self.logger.fatal(self.al.getState())
 
         oldStatus = self.status.copy() #posizione corrente
@@ -194,7 +196,7 @@
         if not isSimoneDice:
             time.sleep(5.0)
             self.applyStatus(oldStatus)
-            time.sleep(10.0)
+            time.sleep(5.0)
 
         #----------------------------------------------------------------
 
@@ -267,6 +269,7 @@
         from naoqi import ALProxy
         from naoqi import *
 
+        #self.al.setStatus(interactivity)
         self.session = qi.Session()
         self.session.connect("tcp://" + "127.0.0.1" + ":" + str(9559))
         self.posture = ALProxy("ALRobotPosture")
