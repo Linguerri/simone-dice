@@ -15,7 +15,7 @@
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
           <Diagram>
-            <Box name="Dialogo_SimoneDice" id="1" localization="8" tooltip="Dialogo con bimbi e gioco" x="396" y="93">
+            <Box name="Dialogo_SimoneDice" id="1" localization="8" tooltip="Dialogo con bimbi e gioco" x="554" y="114">
               <dialogFile>../Dialogo_Simone_diceV1/Dialogo_Simone_diceV1.dlg</dialogFile>
               <bitmap>media/images/box/box-dialog.png</bitmap>
               <script language="4">
