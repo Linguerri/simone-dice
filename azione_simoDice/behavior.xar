@@ -15,7 +15,7 @@
       <BehaviorLayer name="behavior_layer1">
         <BehaviorKeyframe name="keyframe1" index="1">
           <Diagram scale="84.0896">
-            <Box name="gioco_simo_dice_V1" id="1" localization="8" tooltip="" x="350" y="319">
+            <Box name="gioco_simo_dice_V1" id="1" localization="8" tooltip="" x="316" y="352">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
                 <content>
@@ -127,6 +127,7 @@
         self.posture = ALProxy("ALRobotPosture")
         self.al = ALProxy("ALAutonomousLife")
 
+
         self.posture.goToPosture("Stand", 1.0)
 
     def onUnload(self):
@@ -135,6 +136,18 @@
     def onInput_onStart(self):
         import time
         from naoqi import *
+        self.al.setAutonomousAbilityEnabled("BackgroundMovement", False)
+        self.al.setAutonomousAbilityEnabled("ListeningMovement", False)
+        self.al.setAutonomousAbilityEnabled("SpeakingMovement", False)
+
+        self.posture.goToPosture("Stand", 1.0)
+
+        self.main()
+        self.onInput_onStop()
+
+        #########################
+
+    def onInput_onUpdate(self):
         self.main()
         self.onInput_onStop()
 
@@ -144,8 +157,6 @@
         import random
         from random import choice
         from random import random
-
-        #self.al.setStatus(solitary)
 
         self.logger.fatal(self.al.getState())
 
@@ -240,9 +251,10 @@
               <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
               <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
               <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+              <Input name="onUpdate" type="1" type_size="1" nature="1" inner="0" tooltip="" id="4" />
+              <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="5" />
             </Box>
-            <Box name="loop_control" id="2" localization="8" tooltip="entra esce dal programma" x="316" y="102">
+            <Box name="loop_control" id="2" localization="8" tooltip="entra esce dal programma" x="304" y="69">
               <dialogFile>../loop_control/loop_control.dlg</dialogFile>
               <bitmap>media/images/box/box-dialog.png</bitmap>
               <script language="4">
@@ -257,7 +269,7 @@
               <Output name="continua" type="1" type_size="1" nature="2" inner="0" tooltip="" id="5" />
               <Output name="fine" type="1" type_size="1" nature="2" inner="0" tooltip="" id="6" />
             </Box>
-            <Box name="reset_position" id="3" localization="8" tooltip="" x="671" y="357">
+            <Box name="reset_position" id="3" localization="8" tooltip="" x="622" y="63">
               <bitmap>media/images/box/box-python-script.png</bitmap>
               <script language="4">
                 <content>
@@ -273,6 +285,8 @@
         self.session = qi.Session()
         self.session.connect("tcp://" + "127.0.0.1" + ":" + str(9559))
         self.posture = ALProxy("ALRobotPosture")
+        self.al = ALProxy("ALAutonomousLife")
+
 
 
     def onUnload(self):
@@ -284,6 +298,10 @@
 
 
     def onInput_onStop(self):
+        self.al.setAutonomousAbilityEnabled("BackgroundMovement", True)
+        self.al.setAutonomousAbilityEnabled("ListeningMovement", True)
+        self.al.setAutonomousAbilityEnabled("SpeakingMovement", True)
+
         self.onUnload()
         self.onStopped()]]>
                 </content>
@@ -294,10 +312,10 @@
               <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
             </Box>
             <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
-            <Link inputowner="2" indexofinput="2" outputowner="1" indexofoutput="4" />
-            <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="5" />
+            <Link inputowner="2" indexofinput="2" outputowner="1" indexofoutput="5" />
             <Link inputowner="3" indexofinput="2" outputowner="2" indexofoutput="6" />
             <Link inputowner="0" indexofinput="4" outputowner="3" indexofoutput="4" />
+            <Link inputowner="1" indexofinput="4" outputowner="2" indexofoutput="5" />
           </Diagram>
         </BehaviorKeyframe>
       </BehaviorLayer>

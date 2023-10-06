@@ -95,7 +95,7 @@ concept:(compleanno)
 
 concept:(risp_compleanno)
 [
-    "auguri"
+    auguri
     "tanti auguri"
     "buon compleanno"
     "tantissimi auguri"
@@ -165,6 +165,9 @@ concept:(complimenti)[
 concept:(passioni)[
     "{quali} {che} passioni hai?"
     "quali sono le tue passioni?"
+    "passioni"
+    "dimmi le tue passioni"
+    "cosa ti piace fare"
 ]
 
 concept:(saluti_arrivederci)[
@@ -184,7 +187,7 @@ concept:(capire)
     "non ho capito niente"
     "{che} cosa hai detto"
     "{scusa} non ho capito"
-    "Eh"
+    Eh
     "{perdonami} potresti ripetere"
     "{perdonami} puoi ripetere"
 ]
@@ -220,25 +223,27 @@ u:(~pres) ciao a tutti! Benvenuti al Laboratorio di Informatica, io mi chiamo Na
 
 u:(~chi_sei) io mi chiamo Nao, sono un robot umanoide, mi piace stare con le persone sopratutto amo i bambini
 
+u:(~saluti) ["ciao a tutti" Buongiorno Salve]
+
 u:({Nao} sei pronto a spiegare il gioco?) "certo, sono prontissimo, non vedo l'ora di iniziare"
 
 u:({Nao} spiega il gioco) "Benvenuti al laboratorio di Informatica, oggi faremo il gioco Simone dice. 
 Ora vi spiegherò le regole: 
 Io vi dirò dei movimenti e voi dovete farli e dovete restare in quella posizione finchè non vi dirò di cambiarla.
-Contemporanemante chiamerò altri movimenti . 
+Contemporaneamente chiamerò altri movimenti . 
 La difficoltà è che voi dovete fare i movimenti solo quando dico simone dice se non lo dico dovete restare fermi.
 Se vi muovete verrete eliminati.
-Facciamo un esempio, Giulia, Aiutami. Simone dice alza il braccio destro, abbassa il braccio destro. 
+Facciamo un esempio, Giulia, Aiutami. Simone dice alza il braccio destro,  e poi dico abbassa il braccio destro. 
 Ecco come vedete, Giulia ha tenuto su il braccio perchè non ho detto, simone dice, ma ho detto solo, abbassate il braccio destro.
 Inoltre farò anche io questi movimenti, però dovete stare attenti perchè alcuni li farò corretti, altri invece saranno sbagliati perciò dovete fare attenzione. Avete qualche domanda?"
-    u1:(~si) "ok ditemi tutto"
-    u1:(~no) "ok allora tutto chiaro, nel caso per qualsiasi cosa potete chiedere e Giulia e a Gianluca"
+    u1:(si) "ok ditemi tutto"
+    u1:(no) "ok allora tutto chiaro, nel caso per qualsiasi cosa potete chiedere e Giulia e a Gianluca"
     
-u:({Nao} puoi rispiegare?) Io vi dirò dei movimenti e voi dovete farli e dovete restare in quella posizione finchè non vi dirò di cambiarla.
-Contemporanemante chiamerò altri movimenti . 
+u:({Nao} puoi rispiegare?) va bene, ora ripeto, vi dirò dei movimenti e voi dovete farli e dovete restare in quella posizione finchè non vi dirò di cambiarla.
+Contemporaneamente chiamerò altri movimenti . 
 La difficoltà è che voi dovete fare i movimenti solo quando dico simone dice se non lo dico dovete restare fermi.
 Se vi muovete verrete eliminati.
-Facciamo un esempio, Giulia, Aiutami. Simone dice alza il braccio destro, abbassa il braccio destro. 
+Facciamo un esempio, Giulia, Aiutami. Simone dice alza il braccio destro, e poi dico abbassa il braccio destro. 
 Ecco come vedete, Giulia ha tenuto su il braccio perchè non ho detto, simone dice, ma ho detto solo, abbassate il braccio destro.
 Inoltre farò anche io questi movimenti, però dovete stare attenti perchè alcuni li farò corretti, altri invece saranno sbagliati perciò dovete fare attenzione.
 
@@ -290,8 +295,8 @@ u: (~elenco_dom) ["quando è il mio compleanno, come sto, qual è il mio animale
 u:(~complimenti) "grazie tu sei simpatico"
 
 
-u:({nao} iniziamo il gioco) ^start(azione_simoDice) ^wait(azione_simoDice)
+u:({nao} iniziamo il gioco) ^start(simo_dice_v1-a2d61e/azione_simoDice) "va bene" ^wait(simo_dice_v1-a2d61e/azione_simoDice)
 
 #simo_dice_v1-a2d61e/azione_simoDice
 
-u:(["ok andiamo avanti" "prossimo movimento"]) ^start(azione_simoDice) ^wait(azione_simoDice)
+#u:(["ok andiamo avanti" "prossimo movimento"]) ^start(azione_simoDice) ^wait(azione_simoDice)
