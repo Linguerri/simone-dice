@@ -296,7 +296,7 @@ u:(~complimenti) "grazie tu sei simpatico"
 
 #u:({nao} iniziamo il gioco) "si"
 
-u:({nao} iniziamo il gioco) si ^start(simo_dice_v1-a2d61e/azione_simoDice) ^wait(simo_dice_v1-a2d61e/azione_simoDice) "Buona giornata"
+u:({nao} iniziamo il gioco) si iniziamo $inizioGioco=1
 
 #simo_dice_v1-a2d61e/azione_simoDice
 

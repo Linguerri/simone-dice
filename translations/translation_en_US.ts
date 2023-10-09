@@ -8,6 +8,9 @@
             <comment>Text</comment>
             <translation type="vanished">Hello</translation>
         </message>
+    </context>
+    <context>
+        <name>azione_simoDice/behavior.xar:/Say (1)</name>
         <message>
             <location filename="azione_simoDice/behavior.xar" line="0"/>
             <source>iniziamo il gioco</source>

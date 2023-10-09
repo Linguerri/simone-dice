@@ -14,6 +14,14 @@
             <translation type="obsolete">ok iniziamo il gioco</translation>
         </message>
         <message>
+            <source>iniziamo il gioco</source>
+            <comment>Text</comment>
+            <translation type="obsolete">iniziamo il gioco</translation>
+        </message>
+    </context>
+    <context>
+        <name>azione_simoDice/behavior.xar:/Say (1)</name>
+        <message>
             <location filename="azione_simoDice/behavior.xar" line="0"/>
             <source>iniziamo il gioco</source>
             <comment>Text</comment>

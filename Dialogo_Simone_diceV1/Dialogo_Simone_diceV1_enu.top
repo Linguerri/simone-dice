@@ -296,7 +296,9 @@ u:(~complimenti) "grazie tu sei simpatico"
 
 #u:({nao} iniziamo il gioco) "ok"
 
-u:({nao} iniziamo il gioco) ok ^start(simo_dice_v1-a2d61e/azione_simoDice) ^wait(simo_dice_v1-a2d61e/azione_simoDice)
+u:({nao} iniziamo il gioco) si iniziamo $inizioGioco=1
+
+#u:({nao} iniziamo il gioco) ok ^start(simo_dice_v1-a2d61e/azione_simoDice) ^wait(simo_dice_v1-a2d61e/azione_simoDice)
 
 #simo_dice_v1-a2d61e/azione_simoDice       
 
